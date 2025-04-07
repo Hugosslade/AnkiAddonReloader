@@ -43,7 +43,7 @@ import importlib
 
 from aqt import mw
 from aqt.qt import *
-
+from PyQt6.QtWidgets import QDialogButtonBox
 
 class AddonChooser(QDialog):
     def __init__(self, modules):
@@ -56,8 +56,8 @@ class AddonChooser(QDialog):
         self.layout.addWidget(self.choice)
 
         buttons = QDialogButtonBox()
-        buttons.addButton(QDialogButtonBox.Ok)
-        buttons.addButton(QDialogButtonBox.Cancel)
+        buttons.addButton(QDialogButtonBox.StandardButton.Ok)
+        buttons.addButton(QDialogButtonBox.StandardButton.Cancel)
         buttons.accepted.connect(self.accept)
         buttons.rejected.connect(self.reject)
         self.layout.addWidget(buttons)
@@ -77,9 +77,9 @@ def choose_addon():
         modules[module_name] = module
 
     chooser = AddonChooser(modules)
-    response = chooser.exec_()
+    response = chooser.exec()
     choice = chooser.choice.currentText()
-    if response == QDialog.Rejected:
+    if response == QDialog.DialogCode.Rejected:
         return
     if action_repeat is not None:
         mw.form.menuTools.removeAction(action_repeat)
@@ -132,7 +132,6 @@ def reload_package(package):
                         reload_recursive_ex(module_child)
 
     return reload_recursive_ex(package)
-
 
 action_repeat = None
 action_choose = QAction("Reload addon...", mw)
