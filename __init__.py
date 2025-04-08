@@ -43,6 +43,7 @@ import importlib
 
 from aqt import mw
 from aqt.qt import *
+from aqt.utils import tooltip
 from PyQt6.QtWidgets import QDialogButtonBox
 
 class AddonChooser(QDialog):
@@ -107,6 +108,7 @@ def choose_addon():
         mw.form.menuTools.addAction(new_action)
         action_repeat = new_action
         reload_the_addon()
+        tooltip("Reloaded " + choice)
 
 
 def reload_package(package):
